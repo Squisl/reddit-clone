@@ -22,6 +22,10 @@ const usersSchema = mongoose.Schema(
     tokenVersion: {
       type: Number,
       default: 0
+    },
+    confirmed: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }

@@ -1,0 +1,25 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+.app {
+  font-family: "Lato", sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+:root {
+  --grey: #3a3931;
+  --brown: #754e39;
+  --light-brown: #bc7d42;
+  --lighter-brown: #c4aa92;
+  --white: #f4f3f1;
+}

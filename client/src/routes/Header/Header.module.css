@@ -1,0 +1,35 @@
+.header__container {
+  min-height: 5em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2em;
+  background: var(--white);
+}
+
+.header__container_left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header__container_left > *:not(:last-child) {
+  margin-right: 1em;
+}
+
+.header__container_right > *:not(:last-child) {
+  margin-right: 1em;
+}
+
+.header__hamburger__icon {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.header__logo__link {
+  color: var(--grey);
+}
+
+.header__logo {
+  font-size: 2.5rem;
+}

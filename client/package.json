@@ -6,10 +6,12 @@
     "jwt-decode": "^2.2.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-icons": "^3.8.0",
     "react-redux": "^7.1.3",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
     "validator": "^12.0.0"
   },
   "scripts": {
@@ -19,7 +21,10 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "plugin:prettier/recommended"
+    ]
   },
   "browserslist": {
     "production": [
@@ -31,6 +36,33 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
+    "prettier": "^1.19.1"
+  },
+  "prettier": {
+    "printWidth": 90,
+    "bracketSpacing": false,
+    "trailingComma": "es5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.+(js|jsx)": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.+(json|css|md)": [
+      "prettier --write",
+      "git add"
     ]
   }
 }

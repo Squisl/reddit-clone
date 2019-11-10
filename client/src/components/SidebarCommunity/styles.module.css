@@ -1,0 +1,10 @@
+.sidebar__community {
+  display: inline-block;
+  padding: 1em;
+  padding-left: 2em;
+}
+
+.sidebar__community:hover {
+  background: var(--lighter-brown);
+  cursor: pointer;
+}

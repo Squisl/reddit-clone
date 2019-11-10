@@ -22,7 +22,7 @@ const register = async (req, res) => {
     // Encrypt the password
     const hashedPassword = await bcrypt.hash(password, 12);
     // Save the user to the database
-    const newUser = await Users.create({
+    const _ = await Users.create({
       name,
       email,
       password: hashedPassword
