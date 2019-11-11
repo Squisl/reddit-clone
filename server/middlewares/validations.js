@@ -15,12 +15,8 @@ const register = joi.object({
     .string()
     .min(6)
     .max(32)
-    .required()
-    .pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/),
-  confirmPassword: joi
-    .any()
-    .valid(joi.ref("password"))
-    .required()
+    .required(),
+  confirmPassword: joi.valid(joi.ref("password")).required()
 });
 
 const login = joi.object({
@@ -49,7 +45,11 @@ const check = (schema, property) => (req, res, next) => {
     return next();
   }
   // Input is invalid
-  return res.status(400).send(error);
+  const errorObject = error.details.reduce((acc, curr) => {
+    acc[curr.path[0]] = curr.message;
+    return acc;
+  }, {});
+  return res.status(400).send(errorObject);
 };
 
 module.exports = {

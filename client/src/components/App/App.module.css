@@ -1,5 +1,6 @@
 html {
   box-sizing: border-box;
+  font-family: "Lato", sans-serif;
 }
 
 *,
@@ -9,7 +10,6 @@ html {
 }
 
 .app {
-  font-family: "Lato", sans-serif;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,4 +22,5 @@ html {
   --light-brown: #bc7d42;
   --lighter-brown: #c4aa92;
   --white: #f4f3f1;
+  --red: #ff3939;
 }

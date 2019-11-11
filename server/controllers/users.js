@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer");
 const { Users } = require("../models");
+const createToken = require("../utilities/createToken");
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -22,12 +24,41 @@ const register = async (req, res) => {
     // Encrypt the password
     const hashedPassword = await bcrypt.hash(password, 12);
     // Save the user to the database
-    const _ = await Users.create({
+    const newUser = await Users.create({
       name,
       email,
       password: hashedPassword
     });
-    res.status(201).end();
+
+    const emailToken = await createToken(
+      { user_id: newUser._id },
+      process.env.EMAIL_SECRET,
+      process.env.EMAIL_EXPIRATION
+    );
+
+    const confirmation_url = `http://localhost:3000/confirm/${emailToken}`;
+
+    // TODO: Send confirmation link to the email address
+    // create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.NODEMAILER_EMAIL, // generated ethereal user
+        pass: process.env.NODEMAILER_PASSWORD // generated ethereal password
+      }
+    });
+
+    // send mail with defined transport object
+    const info = await transporter.sendMail({
+      from: "admin", // sender address
+      to: email, // list of receivers
+      subject: "Confirm Email", // Subject line
+      html: `Please click this link to confirm your email address: <a href=${confirmation_url} target="_blank">${confirmation_url}</a>` // html body
+    });
+
+    res.status(201).send({
+      msg: "Successfully created. Please confirm your email address."
+    });
   } catch (e) {
     console.error(e);
     return res.status(400).end();
@@ -50,8 +81,30 @@ const login = async (req, res) => {
       return res.status(401).send({ msg: "Invalid credentials" });
     }
     // Passwords match
-    const { _id, email } = user;
-    res.send({ _id, name, email });
+    const { _id, email, tokenVersion } = user;
+    // Create refresh token
+    const refreshToken = await createToken(
+      { _id, tokenVersion },
+      process.env.REFRESH_SECRET,
+      process.env.REFRESH_EXPIRATION
+    );
+    // Save refresh token in a cookie
+    res.cookie("jwt", refreshToken, {
+      maxAge: parseInt(process.env.REFRESH_EXPIRATION),
+      httpOnly: true,
+      sameSite: true,
+      secure: false
+    });
+    // Create access token
+    const accessToken = await createToken(
+      { _id, tokenVersion },
+      process.env.ACCESS_SECRET,
+      process.env.ACCESS_EXPIRATION
+    );
+    res.send({
+      token: accessToken,
+      user: { _id, name, email }
+    });
   } catch (e) {
     console.error(e);
     return res.status(400).end();

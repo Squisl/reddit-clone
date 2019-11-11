@@ -17,6 +17,7 @@ const fetchAPI = async (url, method = "GET", body) => {
   }
   // Send the request and wait for response
   const response = await fetch(url, options);
+  console.log("fetch api response", response);
   // Convert response to json
   const data = await response.json();
   // If the response was successful, return the data

@@ -1,3 +1,5 @@
+import fetchAPI from "../utilities/fetchAPI";
+
 // Action types
 const RECEIVE_SESSION = "RECEIVE_SESSION";
 
@@ -6,6 +8,11 @@ export const receiveSession = user => ({
   type: RECEIVE_SESSION,
   user,
 });
+
+export const register = data => async dispatch => {
+  const response = await fetchAPI("/api/users/register", "POST", data);
+  console.log("Register response", response);
+};
 
 const initialState = {
   session: null,

@@ -13,3 +13,9 @@
 .input__label {
   margin-bottom: 0.5em;
 }
+
+.input__error {
+  color: var(--red);
+  font-size: 0.8rem;
+  margin-top: 0.3em;
+}
