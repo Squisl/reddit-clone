@@ -1,0 +1,9 @@
+.form {
+  font-family: "Lato", sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.form > *:not(:last-child) {
+  margin-bottom: 2em;
+}

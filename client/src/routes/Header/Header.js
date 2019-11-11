@@ -6,19 +6,20 @@ import {Link} from "react-router-dom";
 
 import styles from "./Header.module.css";
 import Button from "../../components/Button";
+import HamburgerIcon from "../../components/HamburgerIcon";
 
-const Header = props => {
+const Header = ({toggleRegister, toggleLogin}) => {
   return (
     <div className={styles.header__container}>
       <div className={styles.header__container_left}>
-        <GiHamburgerMenu className={styles.header__hamburger__icon} />
+        <HamburgerIcon />
         <Link to="/" className={styles.header__logo__link}>
           <IoLogoReddit className={styles.header__logo} />
         </Link>
       </div>
       <div className={styles.header__container_right}>
-        <Button label="Log In" color="var(--light-brown)" />
-        <Button label="Register" color="var(--brown)" />
+        <Button label="Log In" color="var(--light-brown)" onClick={toggleLogin} />
+        <Button label="Register" color="var(--brown)" onClick={toggleRegister} />
       </div>
     </div>
   );

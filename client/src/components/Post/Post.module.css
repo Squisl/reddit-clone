@@ -6,6 +6,7 @@
   min-width: 20em;
   width: 80%;
   max-width: 50em;
+  cursor: pointer;
 }
 
 .post__sidebar {
@@ -44,6 +45,11 @@
 
 .post__user {
   color: var(--grey);
+  text-decoration: none;
+}
+
+.post__user:hover {
+  text-decoration: underline;
 }
 
 .post__time {
@@ -51,9 +57,18 @@
   color: var(--grey);
 }
 
+.post__time:hover {
+  text-decoration: underline;
+}
+
 .post__community {
   color: var(--black);
   font-weight: 600;
+  text-decoration: none;
+}
+
+.post__community:hover {
+  text-decoration: underline;
 }
 
 .post__main__center {
@@ -73,6 +88,20 @@
   font-size: 0.8rem;
 }
 
+.post__comment {
+  padding: 0.5em;
+  border-radius: 3px;
+}
+
+.post__comment:hover {
+  background: var(--lighter-brown);
+}
+
+.comment__icon {
+  margin-bottom: -2px;
+  margin-right: 0.2em;
+}
+
 .vote__box {
   display: flex;
   flex-direction: column;
@@ -85,6 +114,11 @@
 
 .vote__icon {
   font-size: 1.5rem;
+  border-radius: 3px;
+}
+
+.vote__icon:hover {
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .vote__number {

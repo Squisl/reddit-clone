@@ -1,0 +1,24 @@
+.hamburger__icon {
+  width: 2.5em;
+  cursor: pointer;
+}
+
+.hamburger__icon div {
+  background: var(--brown);
+  border-radius: 3px;
+  height: 5px;
+  margin: 7px 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.hamburger__first {
+  transform: translateY(12px) rotate(135deg);
+}
+
+.hamburger__middle {
+  transform: scale(0);
+}
+
+.hamburger__last {
+  transform: translateY(-12px) rotate(-135deg);
+}

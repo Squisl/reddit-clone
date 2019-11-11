@@ -1,9 +1,12 @@
 .header__container {
+  position: sticky;
+  top: 0;
+  height: 5em;
   min-height: 5em;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2em;
+  padding: 0 1em;
   background: var(--white);
 }
 
@@ -21,15 +24,10 @@
   margin-right: 1em;
 }
 
-.header__hamburger__icon {
-  font-size: 2rem;
-  cursor: pointer;
-}
-
 .header__logo__link {
   color: var(--grey);
 }
 
 .header__logo {
-  font-size: 2.5rem;
+  font-size: 3.5rem;
 }

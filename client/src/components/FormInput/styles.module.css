@@ -1,0 +1,15 @@
+.form__input {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  outline: none;
+  border: none;
+  border-bottom: 2px solid var(--brown);
+  background: var(--white);
+}
+
+.input__label {
+  margin-bottom: 0.5em;
+}

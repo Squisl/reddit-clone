@@ -1,10 +1,14 @@
 .sidebar__community {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
   padding: 1em;
-  padding-left: 2em;
 }
 
 .sidebar__community:hover {
   background: var(--lighter-brown);
   cursor: pointer;
+}
+
+.sidebar__community__label {
+  width: 80%;
 }

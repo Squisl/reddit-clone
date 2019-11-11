@@ -37,7 +37,7 @@ const Post = ({}) => {
         </div>
         <div className={styles.post__main__footer}>
           <div className={styles.post__comment}>
-            <FaCommentAlt />
+            <FaCommentAlt className={styles.comment__icon} />
             <span className={styles.post__comment__number}>12k comments</span>
           </div>
         </div>
