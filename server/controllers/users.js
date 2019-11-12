@@ -119,7 +119,6 @@ const logout = (_, res) => {
 
 const refresh_token = async (req, res) => {
   const token = req.cookies.jwt;
-  console.log("Cookie token", token);
   if (!token) {
     return res.status(401).send({ token: "Token not found" });
   }

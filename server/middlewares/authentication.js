@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { Users } = require("../models");
 
 const protect = async (req, res, next) => {
   // Extract token from the request header
@@ -14,8 +15,9 @@ const protect = async (req, res, next) => {
     if (!decoded) {
       return res.status(401).send({ msg: "Invalid token" });
     }
+    const fetchedUser = await Users.findById(decoded._id);
     // Assign the token payload to the 'user' property of the request
-    req.user = decoded;
+    req.user = fetchedUser;
     next();
   } catch (e) {
     console.error(e);
