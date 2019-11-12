@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 
 import styles from "./RegisterModal.module.css";
@@ -27,19 +27,18 @@ const RegisterModal = ({
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const clearForm = () => {
-    name.length && setName("");
-    email.length && setEmail("");
-    password.length && setPassword("");
-    confirmPassword.length && setConfirmPassword("");
-    Object.keys(errors).length && clearErrors();
+  const handleReset = () => {
+    setName("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+    clearErrors();
   };
 
-  useEffect(() => {
-    if (!open) {
-      clearForm();
-    }
-  }, [clearForm, open]);
+  const handleClose = () => {
+    toggleRegister();
+    handleReset();
+  };
 
   const update = fn => e => fn(e.target.value);
 
@@ -57,14 +56,15 @@ const RegisterModal = ({
     const formData = {name, email, password, confirmPassword};
     const {valid, errors: validationErrors} = validateRegister(formData);
     if (valid) {
-      await register(formData);
+      await register(formData, handleReset);
     } else {
+      console.log(validationErrors);
       receiveErrors(validationErrors);
     }
   };
 
   return (
-    <Modal open={open} toggle={toggleRegister}>
+    <Modal open={open} toggle={handleClose}>
       <form onSubmit={handleSubmit} className={styles.form}>
         <FormInput
           type="text"

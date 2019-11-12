@@ -112,6 +112,11 @@ const login = async (req, res) => {
   }
 };
 
+const logout = (_, res) => {
+  res.clearCookie("jwt");
+  res.send({ msg: "successfully logout" });
+};
+
 const refresh_token = async (req, res) => {
   const token = req.cookies.jwt;
   console.log("Cookie token", token);
@@ -137,8 +142,28 @@ const refresh_token = async (req, res) => {
   }
 };
 
+const reload = async (req, res) => {
+  const token = req.header("Authorization");
+  if (!token) {
+    return res.status(401).send({ token: "Token not found" });
+  }
+  try {
+    const decoded = await jwt.verify(token, process.env.ACCESS_SECRET);
+    if (!decoded) {
+      return res.status(401).send({ token: "Invalid token" });
+    }
+    const fetchedUser = await Users.findById(decoded._id);
+    const { _id, email, name } = fetchedUser;
+    res.send({ _id, email, name });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 module.exports = {
   register,
   login,
-  refresh_token
+  logout,
+  refresh_token,
+  reload
 };

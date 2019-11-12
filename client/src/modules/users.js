@@ -4,6 +4,7 @@ import {receiveErrors} from "./errors";
 
 // Action types
 const RECEIVE_SESSION = "RECEIVE_SESSION";
+const LOGOUT_SESSION = "LOGOUT_SESSION";
 
 // Action creators
 export const receiveSession = user => ({
@@ -11,25 +12,53 @@ export const receiveSession = user => ({
   user,
 });
 
-export const register = data => async dispatch => {
+export const logoutSession = () => ({
+  type: LOGOUT_SESSION,
+});
+
+export const register = (data, handleReset) => async dispatch => {
   try {
     await fetchAPI("/api/users/register", "POST", data);
     dispatch(toggleRegister());
+    handleReset();
   } catch (e) {
     console.error(e);
     dispatch(receiveErrors(e));
   }
 };
 
-export const login = data => async dispatch => {
+export const login = (data, handleReset) => async dispatch => {
   try {
     const response = await fetchAPI("/api/users/login", "POST", data);
     localStorage.setItem("token", response.token);
     dispatch(receiveSession(response.user));
     dispatch(toggleLogin());
+    handleReset();
   } catch (e) {
     console.error(e);
     dispatch(receiveErrors(e));
+  }
+};
+
+export const logout = () => async dispatch => {
+  // Remove access token from the local storage
+  localStorage.removeItem("token");
+  // Delete the cookie containing the refresh token
+  try {
+    await fetchAPI("/api/users/logout", "GET");
+  } catch (e) {
+    console.error(e);
+  }
+  dispatch(logoutSession());
+};
+
+export const reload = setLoading => async dispatch => {
+  try {
+    const response = await fetchAPI("/api/users/reload", "GET");
+    dispatch(receiveSession(response));
+    setLoading(false);
+  } catch (e) {
+    console.error(e);
   }
 };
 
@@ -46,6 +75,8 @@ export default (state = initialState, action) => {
         session: action.user,
         authenticated: Object.keys(action.user).length > 0,
       };
+    case LOGOUT_SESSION:
+      return initialState;
     default:
       return state;
   }

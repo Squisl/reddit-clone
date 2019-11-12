@@ -23,6 +23,7 @@ const Modal = ({open, toggle, children}) =>
 Modal.propTypes = {
   open: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
+  toggle: PropTypes.func.isRequired,
 };
 
 export default Modal;

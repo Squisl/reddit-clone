@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 
 import styles from "./LoginModal.module.css";
@@ -20,16 +20,16 @@ const LoginModal = ({
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
-  const clearForm = () => {
-    name.length && setName("");
-    password.length && setPassword("");
-    Object.keys(errors).length && clearErrors();
+  const handleReset = () => {
+    setName("");
+    setPassword("");
+    clearErrors();
   };
-  useEffect(() => {
-    if (!open) {
-      clearForm();
-    }
-  }, [clearForm, open]);
+
+  const handleClose = () => {
+    toggleLogin();
+    handleReset();
+  };
 
   const handleBlur = (fn, field, ...rest) => e => {
     const {valid, error} = fn(e.target.value, ...rest);
@@ -54,7 +54,7 @@ const LoginModal = ({
   };
 
   return (
-    <Modal open={open} toggle={toggleLogin}>
+    <Modal open={open} toggle={handleClose}>
       {errors.msg && (
         <div className={styles.message__container}>
           <MessageBlock message={errors.msg} color="var(--red)" />
