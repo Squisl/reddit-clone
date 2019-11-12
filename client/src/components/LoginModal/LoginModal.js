@@ -20,17 +20,16 @@ const LoginModal = ({
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    if (!open) {
-      clearForm();
-    }
-  }, [clearForm, open]);
-
   const clearForm = () => {
     name.length && setName("");
     password.length && setPassword("");
     Object.keys(errors).length && clearErrors();
   };
+  useEffect(() => {
+    if (!open) {
+      clearForm();
+    }
+  }, [clearForm, open]);
 
   const handleBlur = (fn, field, ...rest) => e => {
     const {valid, error} = fn(e.target.value, ...rest);

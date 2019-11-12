@@ -12,7 +12,6 @@ import {
   validateConfirmPassword,
   validateRegister,
 } from "../../utilities/validations";
-import {clearErrors} from "../../modules/errors";
 
 const RegisterModal = ({
   open,
@@ -28,12 +27,6 @@ const RegisterModal = ({
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  useEffect(() => {
-    if (!open) {
-      clearForm();
-    }
-  }, [clearForm, open]);
-
   const clearForm = () => {
     name.length && setName("");
     email.length && setEmail("");
@@ -41,6 +34,12 @@ const RegisterModal = ({
     confirmPassword.length && setConfirmPassword("");
     Object.keys(errors).length && clearErrors();
   };
+
+  useEffect(() => {
+    if (!open) {
+      clearForm();
+    }
+  }, [clearForm, open]);
 
   const update = fn => e => fn(e.target.value);
 

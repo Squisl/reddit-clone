@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
 const { Users } = require("../models");
 const createToken = require("../utilities/createToken");
 
@@ -111,7 +112,33 @@ const login = async (req, res) => {
   }
 };
 
+const refresh_token = async (req, res) => {
+  const token = req.cookies.jwt;
+  console.log("Cookie token", token);
+  if (!token) {
+    return res.status(401).send({ token: "Token not found" });
+  }
+  try {
+    const decoded = await jwt.verify(token, process.env.REFRESH_SECRET);
+    console.log("Decoded", decoded);
+    if (!decoded) {
+      return res.status(401).send({ token: "Invalid token" });
+    }
+    const fetchedUser = await Users.findById(decoded._id);
+    const { _id, tokenVersion } = fetchedUser;
+    const accessToken = await createToken(
+      { _id, tokenVersion },
+      process.env.ACCESS_SECRET,
+      process.env.ACCESS_EXPIRATION
+    );
+    res.send({ token: accessToken });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 module.exports = {
   register,
-  login
+  login,
+  refresh_token
 };

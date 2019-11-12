@@ -13,7 +13,8 @@ const refreshToken = () => next => async action => {
       return next(action);
     }
     if (decoded.exp < Date.now() / 1000) {
-      const response = await fetchAPI("/api/user/refresh_token", "GET");
+      const response = await fetchAPI("/api/users/refresh_token", "GET");
+      console.log("Response refresh", response);
       localStorage.setItem("token", response.token);
     }
     next(action);
