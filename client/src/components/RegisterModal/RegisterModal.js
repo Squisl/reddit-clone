@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 
 import styles from "./RegisterModal.module.css";
@@ -12,24 +12,44 @@ import {
   validateConfirmPassword,
   validateRegister,
 } from "../../utilities/validations";
+import {clearErrors} from "../../modules/errors";
 
-const RegisterModal = ({open, toggleRegister, register}) => {
+const RegisterModal = ({
+  open,
+  toggleRegister,
+  register,
+  errors,
+  receiveErrors,
+  clearError,
+  clearErrors,
+}) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (!open) {
+      clearForm();
+    }
+  }, [clearForm, open]);
+
+  const clearForm = () => {
+    name.length && setName("");
+    email.length && setEmail("");
+    password.length && setPassword("");
+    confirmPassword.length && setConfirmPassword("");
+    Object.keys(errors).length && clearErrors();
+  };
 
   const update = fn => e => fn(e.target.value);
 
   const handleBlur = (fn, field, ...rest) => e => {
     const {valid, error} = fn(e.target.value, ...rest);
     if (!valid) {
-      setErrors({...errors, ...error});
+      receiveErrors(error);
     } else if (errors[field]) {
-      const errorsCopy = Object.assign({}, errors);
-      delete errorsCopy[field];
-      setErrors(errorsCopy);
+      clearError(field);
     }
   };
 
@@ -38,12 +58,9 @@ const RegisterModal = ({open, toggleRegister, register}) => {
     const formData = {name, email, password, confirmPassword};
     const {valid, errors: validationErrors} = validateRegister(formData);
     if (valid) {
-      const registerErrors = await register(formData);
-      if (registerErrors) {
-        setErrors({...errors, ...registerErrors});
-      }
+      await register(formData);
     } else {
-      setErrors({...errors, ...validationErrors});
+      receiveErrors(validationErrors);
     }
   };
 

@@ -1,0 +1,9 @@
+.message__block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2em 0;
+  border-radius: 3px;
+  color: var(--white);
+  font-weight: 600;
+}

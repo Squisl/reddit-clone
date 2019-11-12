@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 
 import styles from "./LoginModal.module.css";
@@ -6,20 +6,38 @@ import Modal from "../Modal";
 import FormInput from "../FormInput";
 import Button from "../Button";
 import {validateName, validatePassword, validateLogin} from "../../utilities/validations";
+import MessageBlock from "../MessageBlock";
 
-const LoginModal = ({open, toggleLogin, login}) => {
+const LoginModal = ({
+  open,
+  toggleLogin,
+  login,
+  errors,
+  clearErrors,
+  receiveErrors,
+  clearError,
+}) => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (!open) {
+      clearForm();
+    }
+  }, [clearForm, open]);
+
+  const clearForm = () => {
+    name.length && setName("");
+    password.length && setPassword("");
+    Object.keys(errors).length && clearErrors();
+  };
 
   const handleBlur = (fn, field, ...rest) => e => {
     const {valid, error} = fn(e.target.value, ...rest);
     if (!valid) {
-      setErrors({...errors, ...error});
+      receiveErrors(error);
     } else if (errors[field]) {
-      const errorsCopy = Object.assign({}, errors);
-      delete errorsCopy[field];
-      setErrors(errorsCopy);
+      clearError(field);
     }
   };
 
@@ -30,17 +48,19 @@ const LoginModal = ({open, toggleLogin, login}) => {
     const formData = {name, password};
     const {valid, errors: validationErrors} = validateLogin(formData);
     if (valid) {
-      const loginErrors = await login(formData);
-      if (loginErrors) {
-        setErrors({...errors, ...loginErrors});
-      }
+      await login(formData);
     } else {
-      setErrors({...errors, ...validationErrors});
+      receiveErrors(validationErrors);
     }
   };
 
   return (
     <Modal open={open} toggle={toggleLogin}>
+      {errors.msg && (
+        <div className={styles.message__container}>
+          <MessageBlock message={errors.msg} color="var(--red)" />
+        </div>
+      )}
       <form className={styles.form} onSubmit={handleSubmit}>
         <FormInput
           type="text"
@@ -55,7 +75,7 @@ const LoginModal = ({open, toggleLogin, login}) => {
           label="Password"
           value={password}
           onChange={update(setPassword)}
-          onBlur={(handleBlur(validatePassword), "password")}
+          onBlur={handleBlur(validatePassword, "password")}
           error={errors.password}
         />
         <Button type="submit" label="Login" color="var(--light-brown)" />

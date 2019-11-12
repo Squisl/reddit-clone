@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 
 import users from "../modules/users";
 import modals from "../modules/modals";
+import errors from "../modules/errors";
 import refreshToken from "../middlewares/refreshToken";
 
 // Enable redux dev tools
@@ -12,6 +13,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const appReducer = combineReducers({
   users,
   modals,
+  errors,
 });
 
 // On logout reset the redux store state
