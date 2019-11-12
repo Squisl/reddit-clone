@@ -10,6 +10,7 @@ import {
   validateEmail,
   validatePassword,
   validateConfirmPassword,
+  validateRegister,
 } from "../../utilities/validations";
 
 const RegisterModal = ({open, toggleRegister, register}) => {
@@ -32,9 +33,18 @@ const RegisterModal = ({open, toggleRegister, register}) => {
     }
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    register({name, email, password, confirmPassword});
+    const formData = {name, email, password, confirmPassword};
+    const {valid, errors: validationErrors} = validateRegister(formData);
+    if (valid) {
+      const registerErrors = await register(formData);
+      if (registerErrors) {
+        setErrors({...errors, ...registerErrors});
+      }
+    } else {
+      setErrors({...errors, ...validationErrors});
+    }
   };
 
   return (

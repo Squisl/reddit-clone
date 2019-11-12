@@ -12,7 +12,7 @@ const FormInput = ({value, onChange, label, type, onBlur, error}) => (
       type={type}
       value={value}
       onChange={onChange}
-      className={styles.input}
+      className={`${styles.input} ${error ? styles.error__border : ""}`}
       onBlur={onBlur}
     />
     {error && <span className={styles.input__error}>{error}</span>}

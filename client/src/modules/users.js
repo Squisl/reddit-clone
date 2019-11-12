@@ -1,4 +1,5 @@
 import fetchAPI from "../utilities/fetchAPI";
+import {toggleRegister, toggleLogin} from "./modals";
 
 // Action types
 const RECEIVE_SESSION = "RECEIVE_SESSION";
@@ -10,8 +11,24 @@ export const receiveSession = user => ({
 });
 
 export const register = data => async dispatch => {
-  const response = await fetchAPI("/api/users/register", "POST", data);
-  console.log("Register response", response);
+  try {
+    const response = await fetchAPI("/api/users/register", "POST", data);
+    dispatch(toggleRegister());
+  } catch (e) {
+    console.error(e);
+    return e;
+  }
+};
+
+export const login = data => async dispatch => {
+  try {
+    const response = await fetchAPI("/api/users/login", "POST", data);
+    localStorage.setItem("token", response.token);
+    dispatch(receiveSession(response.user));
+    dispatch(toggleLogin());
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 const initialState = {
