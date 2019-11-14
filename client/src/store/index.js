@@ -4,6 +4,7 @@ import thunk from "redux-thunk";
 import users from "../modules/users";
 import modals from "../modules/modals";
 import errors from "../modules/errors";
+import communities from "../modules/communities";
 import refreshToken from "../middlewares/refreshToken";
 
 // Enable redux dev tools
@@ -14,6 +15,7 @@ const appReducer = combineReducers({
   users,
   modals,
   errors,
+  communities,
 });
 
 // On logout reset the redux store state

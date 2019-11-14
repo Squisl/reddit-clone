@@ -4,6 +4,9 @@ const { protect } = require("../middlewares/authentication");
 
 const router = Router();
 
-router.route("/").post(protect, communities.create);
+router
+  .route("/")
+  .get(communities.getAll)
+  .post(protect, communities.create);
 
 module.exports = router;
