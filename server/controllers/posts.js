@@ -1,8 +1,23 @@
 const { Posts } = require("../models");
 
 const getAll = async (_, res) => {
-  const allPosts = await Posts.find();
+  const allPosts = await Posts.find()
+    .populate("community", "_id name")
+    .populate("user", "_id name");
   res.send(allPosts);
+};
+
+const getByCommunity = async (req, res) => {
+  try {
+    const communityPosts = await Posts.find({
+      community: req.params.community_id
+    })
+      .populate("community", "_id name")
+      .populate("user", "_id name");
+    res.send(communityPosts);
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 const create = async (req, res) => {
@@ -18,5 +33,6 @@ const create = async (req, res) => {
 
 module.exports = {
   getAll,
+  getByCommunity,
   create
 };

@@ -4,6 +4,7 @@ import thunk from "redux-thunk";
 import users from "../modules/users";
 import modals from "../modules/modals";
 import errors from "../modules/errors";
+import posts from "../modules/posts";
 import communities from "../modules/communities";
 import refreshToken from "../middlewares/refreshToken";
 
@@ -15,6 +16,7 @@ const appReducer = combineReducers({
   users,
   modals,
   errors,
+  posts,
   communities,
 });
 

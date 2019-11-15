@@ -5,17 +5,30 @@ import styles from "./Home.module.css";
 import Sidebar from "../../components/Sidebar";
 import Post from "../../components/Post/Post";
 
-const Home = ({communities, fetchCommunities}) => {
+const Home = ({
+  match,
+  communities,
+  fetchCommunities,
+  fetchPosts,
+  fetchCommunityPosts,
+  posts,
+}) => {
   useEffect(() => {
     fetchCommunities();
-  }, [fetchCommunities]);
+    if (match.params.community) {
+      fetchCommunityPosts(match.params.community);
+    } else {
+      fetchPosts();
+    }
+  }, [fetchCommunities, fetchCommunityPosts, fetchPosts, match.params.community]);
 
   return (
     <div className={styles.home}>
-      <Sidebar communities={communities} />
+      <Sidebar communities={communities.all} fetchCommunities={fetchCommunities} />
       <div className={styles.home__post__list}>
-        <Post />
-        <Post />
+        {posts.map(post => (
+          <Post key={post._id} />
+        ))}
       </div>
     </div>
   );

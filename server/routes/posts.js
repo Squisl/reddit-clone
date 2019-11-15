@@ -8,5 +8,6 @@ router
   .route("/")
   .get(posts.getAll)
   .post(protect, posts.create);
+router.get("/community/:community_id", posts.getByCommunity);
 
 module.exports = router;

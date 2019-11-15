@@ -19,7 +19,19 @@ const getAll = async (_, res) => {
   }
 };
 
+const getByName = async (req, res) => {
+  try {
+    const community = await Communities.find({
+      name: new RegExp(`^${req.params.community_name}`, "i")
+    });
+    res.send(community);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 module.exports = {
   create,
-  getAll
+  getAll,
+  getByName
 };

@@ -5,8 +5,12 @@ import styles from "./styles.module.css";
 import Input from "../Input";
 import SidebarCommunity from "../SidebarCommunity";
 
-const Sidebar = ({communities}) => {
+const Sidebar = ({communities, fetchCommunities}) => {
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    fetchCommunities(search);
+  }, [fetchCommunities, search]);
 
   return (
     <div className={styles.sidebar}>

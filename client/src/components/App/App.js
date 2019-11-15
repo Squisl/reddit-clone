@@ -30,7 +30,7 @@ const App = ({reload}) => {
         <RegisterModal />
         <LoginModal />
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path={["/", "/r/:community"]} component={Home} />
         </Switch>
       </BrowserRouter>
     </div>
