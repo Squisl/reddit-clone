@@ -27,7 +27,14 @@ const Home = ({
       <Sidebar communities={communities.all} fetchCommunities={fetchCommunities} />
       <div className={styles.home__post__list}>
         {posts.map(post => (
-          <Post key={post._id} />
+          <Post
+            key={post._id}
+            community={post.community.name}
+            user={post.user.name}
+            title={post.title}
+            text={post.text}
+            time={post.createdAt}
+          />
         ))}
       </div>
     </div>

@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {GoArrowUp, GoArrowDown} from "react-icons/go";
 import {FaCommentAlt} from "react-icons/fa";
+import relativeTime from "../../utilities/relativeTime";
 
 import styles from "./Post.module.css";
 
-const Post = ({}) => {
+const Post = ({community, user, text, title, time}) => {
   return (
     <div className={styles.post}>
       <div className={styles.post__sidebar}>
@@ -19,21 +20,19 @@ const Post = ({}) => {
       <div className={styles.post__main}>
         <div className={styles.post__main__header}>
           <Link to="/" className={styles.post__community}>
-            r/Askreddit
+            r/{community}
           </Link>
           <span className={styles.post__author}>
             Posted by{" "}
             <Link to="/" className={styles.post__user}>
-              Doinb
+              {user}
             </Link>
           </span>
-          <span className={styles.post__time}>7 hours ago</span>
+          <span className={styles.post__time}>{relativeTime(time)}</span>
         </div>
         <div className={styles.post__main__center}>
-          <span className={styles.post__title}>
-            People with expired non-disclosure-agreements, what's the juicy info you can
-            now tell us?
-          </span>
+          <span className={styles.post__title}>{title}</span>
+          {text && <span className={styles.post__text}>{text}</span>}
         </div>
         <div className={styles.post__main__footer}>
           <div className={styles.post__comment}>
@@ -46,6 +45,11 @@ const Post = ({}) => {
   );
 };
 
-Post.propTypes = {};
+Post.propTypes = {
+  community: PropTypes.string.isRequired,
+  user: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  text: PropTypes.string,
+};
 
 export default Post;
