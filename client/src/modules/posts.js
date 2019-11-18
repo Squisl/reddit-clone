@@ -42,7 +42,15 @@ export const upvote = post_id => async dispatch => {
   }
 };
 
-export const downvote = post_id => async dispatch => {};
+export const downvote = post_id => async dispatch => {
+  try {
+    console.log("Downvote Action ....");
+    const downvotedPost = await fetchAPI(`/api/posts/downvote/${post_id}`, "POST");
+    dispatch(receiveUpdatedPost(downvotedPost));
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 // Reducer
 export default (state = [], action) => {

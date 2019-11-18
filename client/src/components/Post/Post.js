@@ -7,19 +7,51 @@ import relativeTime from "../../utilities/relativeTime";
 import styles from "./Post.module.css";
 import totalVotes from "../../utilities/totalVotes";
 
-const Post = ({id, community, user, text, title, time, votes, session, upvote}) => {
+const Post = ({
+  id,
+  community,
+  user,
+  text,
+  title,
+  time,
+  votes,
+  session,
+  upvote,
+  downvote,
+}) => {
   return (
     <div className={styles.post}>
       <div className={styles.post__sidebar}>
         <div className={styles.vote__box}>
           <GoArrowUp
-            className={`${styles.vote__icon} ${styles.upvote} ${votes.some(
-              v => v.user_id === session._id && v.vote === 1
-            ) && styles.upvoted}`}
+            className={`${styles.vote__icon} ${styles.upvote} ${
+              votes.some(v => v.user_id === session._id && v.vote === 1)
+                ? styles.upvoted
+                : ""
+            }`}
             onClick={() => upvote(id)}
           />
-          <span className={styles.vote__number}>{totalVotes(votes)}</span>
-          <GoArrowDown className={`${styles.vote__icon} ${styles.downvote}`} />
+          <span
+            className={`${styles.vote__number} ${
+              votes.some(v => v.user_id === session._id && v.vote === 1)
+                ? styles.upvoted
+                : ""
+            } ${
+              votes.some(v => v.user_id === session._id && v.vote === -1)
+                ? styles.downvoted
+                : ""
+            }`}
+          >
+            {totalVotes(votes)}
+          </span>
+          <GoArrowDown
+            className={`${styles.vote__icon} ${styles.downvote} ${
+              votes.some(v => v.user_id === session._id && v.vote === -1)
+                ? styles.downvoted
+                : ""
+            }`}
+            onClick={() => downvote(id)}
+          />
         </div>
       </div>
       <div className={styles.post__main}>

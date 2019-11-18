@@ -66,11 +66,62 @@ const upvote = async (req, res) => {
         .populate("user", "_id name");
       res.send(updatedPost);
     } else {
-      await Posts.findByIdAndUpdate(
+      const updatedPost = await Posts.findOneAndUpdate(
         { _id: post_id, "votes.user_id": _id },
-        { $set: { "votes.$.vote": 1 } }
-      );
-      res.end();
+        { $set: { "votes.$.vote": 1 } },
+        { new: true }
+      )
+        .populate("community", "_id name")
+        .populate("user", "_id name");
+      console.log("Updated Post", updatedPost);
+      res.send(updatedPost);
+    }
+  }
+};
+
+const downvote = async (req, res) => {
+  const { post_id } = req.params;
+  const { _id, name } = req.user;
+  const selectedPost = await Posts.findById(post_id);
+  const { votes } = selectedPost;
+  // Check whether user already voted for the post
+  const match = votes.find(
+    vote => vote.user_id === _id.toString() && vote.name === name
+  );
+  // If no vote was found
+  if (!match) {
+    const downvote = { user_id: _id, name, vote: -1 };
+    // Insert new upvote
+    const downvotedPost = await Posts.findByIdAndUpdate(
+      post_id,
+      {
+        $push: { votes: downvote }
+      },
+      { new: true }
+    )
+      .populate("community", "_id name")
+      .populate("user", "_id name");
+    res.send(downvotedPost);
+  } else {
+    // If the vote is an downvote, delete it from the post
+    if (match.vote === -1) {
+      const updatedPost = await Posts.findByIdAndUpdate(
+        post_id,
+        { $pull: { votes: { user_id: _id.toString(), name } } },
+        { new: true }
+      )
+        .populate("community", "_id name")
+        .populate("user", "_id name");
+      res.send(updatedPost);
+    } else {
+      const updatedPost = await Posts.findOneAndUpdate(
+        { _id: post_id, votes: { $elemMatch: { user_id: _id.toString() } } },
+        { $set: { "votes.$.vote": -1 } },
+        { new: true }
+      )
+        .populate("community", "_id name")
+        .populate("user", "_id name");
+      res.send(updatedPost);
     }
   }
 };
@@ -79,5 +130,6 @@ module.exports = {
   getAll,
   getByCommunity,
   create,
-  upvote
+  upvote,
+  downvote
 };

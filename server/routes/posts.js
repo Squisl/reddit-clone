@@ -10,5 +10,6 @@ router
   .post(protect, posts.create);
 router.get("/community/:community_id", posts.getByCommunity);
 router.post("/upvote/:post_id", protect, posts.upvote);
+router.post("/downvote/:post_id", protect, posts.downvote);
 
 module.exports = router;
