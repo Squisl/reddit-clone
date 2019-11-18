@@ -1,4 +1,4 @@
-const { Posts } = require("../models");
+const { Posts, Communities } = require("../models");
 
 const getAll = async (_, res) => {
   const allPosts = await Posts.find()
@@ -9,8 +9,15 @@ const getAll = async (_, res) => {
 
 const getByCommunity = async (req, res) => {
   try {
+    // Get the community by name
+    const community = await Communities.findOne({
+      name: req.params.community_name
+    });
+    if (!community) {
+      return res.status(404).send({ msg: "Community not found" });
+    }
     const communityPosts = await Posts.find({
-      community: req.params.community_id
+      community: community._id
     })
       .populate("community", "_id name")
       .populate("user", "_id name");

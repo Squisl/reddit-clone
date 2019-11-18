@@ -24,9 +24,9 @@ export const fetchPosts = () => async dispatch => {
   }
 };
 
-export const fetchCommunityPosts = community_id => async dispatch => {
+export const fetchCommunityPosts = community_name => async dispatch => {
   try {
-    const fetchedPosts = await fetchAPI(`/api/posts/community/${community_id}`, "GET");
+    const fetchedPosts = await fetchAPI(`/api/posts/community/${community_name}`, "GET");
     dispatch(receivePosts(fetchedPosts));
   } catch (e) {
     console.error(e);

@@ -3,6 +3,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 
 import styles from "./App.module.css";
 import Home from "../../routes/Home";
+import Post from "../../routes/Post";
 import Header from "../../routes/Header";
 import RegisterModal from "../RegisterModal";
 import LoginModal from "../LoginModal";
@@ -31,6 +32,7 @@ const App = ({reload}) => {
         <LoginModal />
         <Switch>
           <Route exact path={["/", "/r/:community"]} component={Home} />
+          <Route exact path="/r/:community/comments/:post_id" component={Post} />
         </Switch>
       </BrowserRouter>
     </div>
