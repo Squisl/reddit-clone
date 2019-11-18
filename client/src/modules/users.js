@@ -63,7 +63,7 @@ export const reload = setLoading => async dispatch => {
 };
 
 const initialState = {
-  session: null,
+  session: {},
   authenticated: false,
 };
 // Reducer

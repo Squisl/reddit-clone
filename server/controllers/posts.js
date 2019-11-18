@@ -44,26 +44,31 @@ const upvote = async (req, res) => {
   if (!match) {
     const upvote = { user_id: _id, name, vote: 1 };
     // Insert new upvote
-    const upvotedPost = await Posts.update(
-      { _id: post_id },
-      { $push: { votes: upvote } }
-    );
+    const upvotedPost = await Posts.findByIdAndUpdate(
+      post_id,
+      {
+        $push: { votes: upvote }
+      },
+      { new: true }
+    )
+      .populate("community", "_id name")
+      .populate("user", "_id name");
     res.send(upvotedPost);
   } else {
-    console.log("MATCH", match);
     // If the vote is an upvote, delete it from the post
     if (match.vote === 1) {
-      await Posts.update(
-        // select your doc in moongo
-        { _id: post_id }, // your query, usually match by _id
-        { $pull: { votes: { user_id: _id.toString(), name } } }, // item(s) to match from array you want to pull/remove
-        { multi: true } // set this to true if you want to remove multiple elements.
-      );
-      res.end();
+      const updatedPost = await Posts.findByIdAndUpdate(
+        post_id,
+        { $pull: { votes: { user_id: _id.toString(), name } } },
+        { new: true }
+      )
+        .populate("community", "_id name")
+        .populate("user", "_id name");
+      res.send(updatedPost);
     } else {
-      await Posts.update(
+      await Posts.findByIdAndUpdate(
         { _id: post_id, "votes.user_id": _id },
-        { $set: { "votes.$.vote": -1 } }
+        { $set: { "votes.$.vote": 1 } }
       );
       res.end();
     }

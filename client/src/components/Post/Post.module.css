@@ -110,6 +110,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  user-select: none;
 }
 
 .vote__box > *:not(:last-child) {
@@ -123,6 +124,22 @@
 
 .vote__icon:hover {
   background: rgba(0, 0, 0, 0.2);
+}
+
+.upvote:hover {
+  color: var(--red);
+}
+
+.upvoted {
+  color: var(--red);
+}
+
+.downvote:hover {
+  color: var(--blue);
+}
+
+.downvoted {
+  color: var(--blue);
 }
 
 .vote__number {

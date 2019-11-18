@@ -1,20 +1,25 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {GoArrowUp, GoArrowDown} from "react-icons/go";
 import {FaCommentAlt} from "react-icons/fa";
 import relativeTime from "../../utilities/relativeTime";
-
 import styles from "./Post.module.css";
+import totalVotes from "../../utilities/totalVotes";
 
-const Post = ({community, user, text, title, time}) => {
+const Post = ({id, community, user, text, title, time, votes, session, upvote}) => {
   return (
     <div className={styles.post}>
       <div className={styles.post__sidebar}>
         <div className={styles.vote__box}>
-          <GoArrowUp className={styles.vote__icon} />
-          <span className={styles.vote__number}>100</span>
-          <GoArrowDown className={styles.vote__icon} />
+          <GoArrowUp
+            className={`${styles.vote__icon} ${styles.upvote} ${votes.some(
+              v => v.user_id === session._id && v.vote === 1
+            ) && styles.upvoted}`}
+            onClick={() => upvote(id)}
+          />
+          <span className={styles.vote__number}>{totalVotes(votes)}</span>
+          <GoArrowDown className={`${styles.vote__icon} ${styles.downvote}`} />
         </div>
       </div>
       <div className={styles.post__main}>
@@ -50,6 +55,7 @@ Post.propTypes = {
   user: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   text: PropTypes.string,
+  votes: PropTypes.array.isRequired,
 };
 
 export default Post;

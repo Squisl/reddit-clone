@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import styles from "./Home.module.css";
 import Sidebar from "../../components/Sidebar";
-import Post from "../../components/Post/Post";
+import Post from "../../components/Post";
 
 const Home = ({
   match,
@@ -29,11 +29,13 @@ const Home = ({
         {posts.map(post => (
           <Post
             key={post._id}
+            id={post._id}
             community={post.community.name}
             user={post.user.name}
             title={post.title}
             text={post.text}
             time={post.createdAt}
+            votes={post.votes}
           />
         ))}
       </div>
