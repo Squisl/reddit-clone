@@ -36,8 +36,12 @@
   padding: 0.5em;
 }
 
+.comment__main > *:not(:last-child) {
+  margin-bottom: 0.5em;
+}
+
 .comment__header {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .comment__header > *:not(:last-child) {
@@ -46,8 +50,37 @@
 
 .comment__user {
   color: var(--brown);
+  text-decoration: none;
+}
+
+.comment__user:hover {
+  text-decoration: underline;
 }
 
 .comment__text {
-  margin-top: 0.5em;
+}
+
+.comment__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.comment__reply {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5em 0.3em;
+  border-radius: 3px;
+}
+
+.comment__reply:hover {
+  background: #00000033;
+}
+
+.reply__icon {
+  margin-bottom: -2px;
+  margin-right: 0.3em;
 }

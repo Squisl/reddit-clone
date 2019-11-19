@@ -82,7 +82,15 @@ export default (state = initialState, action) => {
     case RECEIVE_UPDATED_POST:
       const allCopy = [...state.all];
       const postIndex = allCopy.findIndex(post => post._id === action.updatedPost._id);
-      allCopy[postIndex] = action.updatedPost;
+      if (postIndex > -1) {
+        allCopy[postIndex] = action.updatedPost;
+      }
+      if (state.current && state.current._id === action.updatedPost._id) {
+        return {
+          all: allCopy,
+          current: action.updatedPost,
+        };
+      }
       return {
         ...state,
         all: allCopy,

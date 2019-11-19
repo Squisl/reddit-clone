@@ -38,6 +38,7 @@ const Post = ({
     <div className={styles.post__container}>
       <div className={styles.post__content}>
         <PostContent
+          id={post._id}
           votes={post.votes}
           session={session}
           upvote={upvote}
@@ -51,7 +52,12 @@ const Post = ({
         />
         <div className={styles.comments__container}>
           {comments.map(comment => (
-            <Comment />
+            <Comment
+              user={comment.user.name}
+              text={comment.text}
+              time={comment.createdAt}
+              votes={comment.votes}
+            />
           ))}
         </div>
       </div>

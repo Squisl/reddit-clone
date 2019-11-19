@@ -3,8 +3,11 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import styles from "./Comment.module.css";
 import {GoArrowUp, GoArrowDown} from "react-icons/go";
+import {MdChatBubble} from "react-icons/md";
+import relativeTime from "../../utilities/relativeTime";
+import totalVotes from "../../utilities/totalVotes";
 
-const Comment = props => {
+const Comment = ({user, text, time, votes}) => {
   return (
     <div className={styles.comment}>
       <div className={styles.comment__sidebar}>
@@ -16,14 +19,17 @@ const Comment = props => {
       <div className={styles.comment__main}>
         <div className={styles.comment__header}>
           <Link to="/" className={styles.comment__user}>
-            HipHoppington
+            {user}
           </Link>
-          <span className={styles.comment__points}>1.4k points</span>
-          <span className={styles.comment__time}>1 hour ago</span>
+          <span className={styles.comment__points}>{totalVotes(votes)} points</span>
+          <span className={styles.comment__time}>{relativeTime(time)}</span>
         </div>
-        <div className={styles.comment__text}>
-          These are the kinds of easter eggs I love, just subtle little references to
-          other things I like. Very cool detail
+        <div className={styles.comment__text}>{text}</div>
+        <div className={styles.comment__footer}>
+          <div className={styles.comment__reply}>
+            <MdChatBubble className={styles.reply__icon} />
+            <span className={styles.reply__text}>Reply</span>
+          </div>
         </div>
       </div>
     </div>
