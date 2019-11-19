@@ -1,0 +1,21 @@
+.post__content {
+  min-width: 20em;
+  width: 80%;
+  max-width: 50em;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.post__container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2em 0;
+  background: var(--grey);
+}
+
+.comments__container {
+  display: flex;
+  flex-direction: column;
+}

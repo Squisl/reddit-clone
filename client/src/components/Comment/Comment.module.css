@@ -1,0 +1,53 @@
+.comment {
+  display: flex;
+  background: var(--white);
+}
+
+.comment__sidebar {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0.5em;
+}
+
+.comment__arrows {
+  display: flex;
+  flex-direction: column;
+}
+
+.upvote:hover {
+  color: var(--red);
+  background: #00000033;
+}
+
+.downvote:hover {
+  color: var(--blue);
+  background: #00000033;
+}
+
+.arrow__icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.comment__main {
+  flex: 1;
+  padding: 0.5em;
+}
+
+.comment__header {
+  font-size: 0.9rem;
+}
+
+.comment__header > *:not(:last-child) {
+  margin-right: 0.5em;
+}
+
+.comment__user {
+  color: var(--brown);
+}
+
+.comment__text {
+  margin-top: 0.5em;
+}

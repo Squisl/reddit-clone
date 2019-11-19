@@ -4,10 +4,10 @@ import {Link} from "react-router-dom";
 import {GoArrowUp, GoArrowDown} from "react-icons/go";
 import {FaCommentAlt} from "react-icons/fa";
 import relativeTime from "../../utilities/relativeTime";
-import styles from "./Post.module.css";
+import styles from "./PostCard.module.css";
 import totalVotes from "../../utilities/totalVotes";
 
-const Post = ({
+const PostCard = ({
   id,
   community,
   user,
@@ -18,9 +18,14 @@ const Post = ({
   session,
   upvote,
   downvote,
+  comments,
+  history,
 }) => {
   return (
-    <div className={styles.post}>
+    <div
+      className={styles.post}
+      onClick={() => history.push(`/r/${community}/comments/${id}`)}
+    >
       <div className={styles.post__sidebar}>
         <div className={styles.vote__box}>
           <GoArrowUp
@@ -29,7 +34,10 @@ const Post = ({
                 ? styles.upvoted
                 : ""
             }`}
-            onClick={() => upvote(id)}
+            onClick={e => {
+              e.stopPropagation();
+              upvote(id);
+            }}
           />
           <span
             className={`${styles.vote__number} ${
@@ -50,7 +58,10 @@ const Post = ({
                 ? styles.downvoted
                 : ""
             }`}
-            onClick={() => downvote(id)}
+            onClick={e => {
+              e.stopPropagation();
+              downvote(id);
+            }}
           />
         </div>
       </div>
@@ -74,7 +85,9 @@ const Post = ({
         <div className={styles.post__main__footer}>
           <div className={styles.post__comment}>
             <FaCommentAlt className={styles.comment__icon} />
-            <span className={styles.post__comment__number}>12k comments</span>
+            <span className={styles.post__comment__number}>
+              {comments.length} comments
+            </span>
           </div>
         </div>
       </div>
@@ -82,7 +95,7 @@ const Post = ({
   );
 };
 
-Post.propTypes = {
+PostCard.propTypes = {
   community: PropTypes.string.isRequired,
   user: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
@@ -90,4 +103,4 @@ Post.propTypes = {
   votes: PropTypes.array.isRequired,
 };
 
-export default Post;
+export default PostCard;

@@ -32,6 +32,12 @@ const postsSchema = new mongoose.Schema(
           required: true
         }
       }
+    ],
+    comments: [
+      {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: "comments"
+      }
     ]
   },
   { timestamps: true }

@@ -3,6 +3,7 @@ import fetchAPI from "../utilities/fetchAPI";
 // Action type
 const RECEIVE_POSTS = "RECEIVE_POSTS";
 const RECEIVE_UPDATED_POST = "RECEIVE_UPDATED_POST";
+const RECEIVE_POST = "RECEIVE_POST";
 
 // Action creators
 export const receivePosts = posts => ({
@@ -13,6 +14,11 @@ export const receivePosts = posts => ({
 export const receiveUpdatedPost = updatedPost => ({
   type: RECEIVE_UPDATED_POST,
   updatedPost,
+});
+
+export const receivePost = post => ({
+  type: RECEIVE_POST,
+  post,
 });
 
 export const fetchPosts = () => async dispatch => {
@@ -44,7 +50,6 @@ export const upvote = post_id => async dispatch => {
 
 export const downvote = post_id => async dispatch => {
   try {
-    console.log("Downvote Action ....");
     const downvotedPost = await fetchAPI(`/api/posts/downvote/${post_id}`, "POST");
     dispatch(receiveUpdatedPost(downvotedPost));
   } catch (e) {
@@ -52,16 +57,41 @@ export const downvote = post_id => async dispatch => {
   }
 };
 
+export const fetchPost = post_id => async dispatch => {
+  try {
+    const fetchedPost = await fetchAPI(`/api/posts/${post_id}`, "GET");
+    dispatch(receivePost(fetchedPost));
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const initialState = {
+  all: [],
+  current: null,
+};
+
 // Reducer
-export default (state = [], action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case RECEIVE_POSTS:
-      return action.posts;
+      return {
+        ...state,
+        all: action.posts,
+      };
     case RECEIVE_UPDATED_POST:
-      const stateCopy = [...state];
-      const postIndex = stateCopy.findIndex(post => post._id === action.updatedPost._id);
-      stateCopy[postIndex] = action.updatedPost;
-      return stateCopy;
+      const allCopy = [...state.all];
+      const postIndex = allCopy.findIndex(post => post._id === action.updatedPost._id);
+      allCopy[postIndex] = action.updatedPost;
+      return {
+        ...state,
+        all: allCopy,
+      };
+    case RECEIVE_POST:
+      return {
+        ...state,
+        current: action.post,
+      };
     default:
       return state;
   }

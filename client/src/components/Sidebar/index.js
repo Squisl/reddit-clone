@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 import Input from "../Input";
 import SidebarCommunity from "../SidebarCommunity";
 
-const Sidebar = ({communities, fetchCommunities}) => {
+const Sidebar = ({communities, fetchCommunities, history}) => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -17,7 +17,11 @@ const Sidebar = ({communities, fetchCommunities}) => {
       <Input value={search} onChange={e => setSearch(e.target.value)} />
       <div className={styles.sidebar__community__list}>
         {communities.map(community => (
-          <SidebarCommunity key={community._id} label={community.name} />
+          <SidebarCommunity
+            key={community._id}
+            label={community.name}
+            history={history}
+          />
         ))}
       </div>
     </div>

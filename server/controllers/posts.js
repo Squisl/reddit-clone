@@ -133,10 +133,18 @@ const downvote = async (req, res) => {
   }
 };
 
+const getById = async (req, res) => {
+  const post = await Posts.findById(req.params.post_id)
+    .populate("user", "_id name")
+    .populate("community", "_id name");
+  res.send(post);
+};
+
 module.exports = {
   getAll,
   getByCommunity,
   create,
   upvote,
-  downvote
+  downvote,
+  getById
 };

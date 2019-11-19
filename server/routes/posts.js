@@ -8,6 +8,7 @@ router
   .route("/")
   .get(posts.getAll)
   .post(protect, posts.create);
+router.route("/:post_id").get(posts.getById);
 router.get("/community/:community_name", posts.getByCommunity);
 router.post("/upvote/:post_id", protect, posts.upvote);
 router.post("/downvote/:post_id", protect, posts.downvote);

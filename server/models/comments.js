@@ -24,8 +24,8 @@ const commentsSchema = new mongoose.Schema(
     },
     votes: [
       {
-        user_id: String,
-        name: String,
+        user_id: { type: String, required: true },
+        name: { type: String, required: true },
         vote: {
           type: Number,
           enum: [1, -1],

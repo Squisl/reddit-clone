@@ -1,3 +1,3 @@
-import PostContainer from "../../components/Post";
+import PostContainer from "./PostContainer";
 
 export default PostContainer;
