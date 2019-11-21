@@ -7,13 +7,23 @@ import {MdChatBubble} from "react-icons/md";
 import relativeTime from "../../utilities/relativeTime";
 import totalVotes from "../../utilities/totalVotes";
 
-const Comment = ({user, text, time, votes}) => {
+const Comment = ({id, user, text, time, votes, upvote, downvote, session}) => {
   return (
     <div className={styles.comment}>
       <div className={styles.comment__sidebar}>
         <div className={styles.comment__arrows}>
-          <GoArrowUp className={`${styles.arrow__icon} ${styles.upvote}`} />
-          <GoArrowDown className={`${styles.arrow__icon} ${styles.downvote}`} />
+          <GoArrowUp
+            className={`${styles.arrow__icon} ${styles.upvote} ${votes.some(
+              v => v.user_id === session._id && v.vote === 1
+            ) && styles.upvoted}`}
+            onClick={() => upvote(id)}
+          />
+          <GoArrowDown
+            className={`${styles.arrow__icon} ${styles.downvote} ${votes.some(
+              v => v.user_id === session._id && v.vote === -1
+            ) && styles.downvoted}`}
+            onClick={() => downvote(id)}
+          />
         </div>
       </div>
       <div className={styles.comment__main}>

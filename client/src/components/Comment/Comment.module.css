@@ -25,10 +25,19 @@
   background: #00000033;
 }
 
+.upvoted {
+  color: var(--red);
+}
+
+.downvoted {
+  color: var(--blue);
+}
+
 .arrow__icon {
   font-size: 1.5rem;
   cursor: pointer;
   border-radius: 3px;
+  user-select: none;
 }
 
 .comment__main {

@@ -104,7 +104,7 @@ const downvote = async (req, res) => {
           }
         },
         { new: true }
-      );
+      ).populate("user", "_id, name");
       return res.status(201).send(updatedComment);
     } else {
       if (match.vote === -1) {
@@ -114,7 +114,7 @@ const downvote = async (req, res) => {
           comment_id,
           { $pull: { votes: { user_id: req.user._id, name: req.user.name } } },
           { new: true }
-        );
+        ).populate("user", "_id, name");
         return res.send(updatedComment);
       } else {
         // If the vote is an upvote, change it to an downvote
@@ -122,7 +122,7 @@ const downvote = async (req, res) => {
           { _id: comment_id, "votes.user_id": req.user._id },
           { $set: { "votes.$.vote": -1 } },
           { new: true }
-        );
+        ).populate("user", "_id, name");
         return res.send(updatedComment);
       }
     }

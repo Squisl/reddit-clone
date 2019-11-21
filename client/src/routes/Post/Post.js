@@ -53,6 +53,8 @@ const Post = ({
         <div className={styles.comments__container}>
           {comments.map(comment => (
             <Comment
+              key={comment._id}
+              id={comment._id}
               user={comment.user.name}
               text={comment.text}
               time={comment.createdAt}
