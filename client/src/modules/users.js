@@ -76,6 +76,7 @@ export default (state = initialState, action) => {
         authenticated: Object.keys(action.user).length > 0,
       };
     case LOGOUT_SESSION:
+      window.location.href = "/";
       return initialState;
     default:
       return state;
