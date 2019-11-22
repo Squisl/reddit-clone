@@ -18,7 +18,6 @@ const register = async (req, res) => {
       errors.email = "Email address is already taken";
     }
     if (Object.keys(errors).length > 0) {
-      console.log("Errors", errors);
       return res.status(400).send(errors);
     }
     // Name and email address are free
@@ -124,7 +123,6 @@ const refresh_token = async (req, res) => {
   }
   try {
     const decoded = await jwt.verify(token, process.env.REFRESH_SECRET);
-    console.log("Decoded", decoded);
     if (!decoded) {
       return res.status(401).send({ token: "Invalid token" });
     }

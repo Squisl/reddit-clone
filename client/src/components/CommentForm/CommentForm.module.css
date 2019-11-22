@@ -1,0 +1,72 @@
+.comment__form__container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.comment__user {
+  font-size: 0.8rem;
+  margin-bottom: 0.5em;
+}
+
+.user__link {
+  color: var(--blue);
+}
+
+.comment__editor__container {
+  border: 1px solid var(--brown);
+  border-radius: 3px;
+}
+
+.comment__editor {
+  padding: 1em;
+  cursor: text;
+  line-height: 1.5;
+}
+
+.comment__editor__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.3em;
+  background: var(--brown);
+  color: var(--white);
+}
+
+.toolbar__buttons {
+  display: flex;
+  align-items: center;
+}
+
+.toolbar__buttons > *:not(:last-child) {
+  margin-right: 0.3em;
+}
+
+.toolbar__comment__button {
+  cursor: pointer;
+  padding: 0.5em;
+  border: none;
+  border-radius: 3px;
+  background: var(--grey);
+  color: var(--white);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.authentication__request {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--brown);
+  border-radius: 3px;
+  padding: 0.8em 1em;
+}
+
+.authentication__text {
+  font-weight: 700;
+  margin-right: 2em;
+}
+
+.authentication__buttons > :not(:last-child) {
+  margin-right: 1em;
+}

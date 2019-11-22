@@ -26,10 +26,8 @@ const getByPost = async (req, res) => {
 const upvote = async (req, res) => {
   const { comment_id } = req.params;
   try {
-    console.log("COMMENT ID", comment_id);
     // Check whether comment with the id exists
     const comment = await Comments.findById(comment_id);
-    console.log("COMMENT", comment);
     // If the comment was not found return error message
     if (!comment) {
       return res.status(404).send({ msg: "Comment not found" });
@@ -108,7 +106,6 @@ const downvote = async (req, res) => {
       return res.status(201).send(updatedComment);
     } else {
       if (match.vote === -1) {
-        console.log("MATCH IS DOWNVOTED");
         // If the vote is an downvote, delete it
         const updatedComment = await Comments.findByIdAndUpdate(
           comment_id,

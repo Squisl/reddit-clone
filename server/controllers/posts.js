@@ -80,7 +80,6 @@ const upvote = async (req, res) => {
       )
         .populate("community", "_id name")
         .populate("user", "_id name");
-      console.log("Updated Post", updatedPost);
       res.send(updatedPost);
     }
   }

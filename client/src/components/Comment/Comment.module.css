@@ -1,6 +1,5 @@
 .comment {
   display: flex;
-  background: var(--white);
 }
 
 .comment__sidebar {

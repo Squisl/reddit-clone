@@ -4,6 +4,7 @@ import styles from "./Post.module.css";
 import PostContent from "../../components/PostContent";
 import Loading from "../../components/Loading";
 import Comment from "../../components/Comment";
+import CommentForm from "../../components/CommentForm";
 
 const Post = ({
   match,
@@ -50,6 +51,9 @@ const Post = ({
           text={post.text}
           comments={post.comments}
         />
+        <div className={styles.comment__form__container}>
+          <CommentForm />
+        </div>
         <div className={styles.comments__container}>
           {comments.map(comment => (
             <Comment

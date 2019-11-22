@@ -1,0 +1,15 @@
+.toolbar__button {
+  display: flex;
+  align-items: center;
+  background: var(--brown);
+  color: var(--white);
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  padding: 0.3em;
+  outline: none;
+}
+
+.toolbar__button:hover {
+  background: var(--light-brown);
+}

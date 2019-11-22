@@ -1,6 +1,5 @@
 .post {
   display: flex;
-  background: var(--white);
   overflow: hidden;
 }
 
