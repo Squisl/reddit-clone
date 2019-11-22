@@ -52,13 +52,14 @@ const Post = ({
           comments={post.comments}
         />
         <div className={styles.comment__form__container}>
-          <CommentForm />
+          <CommentForm post_id={post._id} />
         </div>
         <div className={styles.comments__container}>
           {comments.map(comment => (
             <Comment
               key={comment._id}
               id={comment._id}
+              post_id={comment.post}
               user={comment.user.name}
               text={comment.text}
               time={comment.createdAt}

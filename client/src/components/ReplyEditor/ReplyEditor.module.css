@@ -1,7 +1,6 @@
 .comment__form__container {
   display: flex;
   flex-direction: column;
-  width: 90%;
 }
 
 .comment__user {
@@ -46,6 +45,14 @@
   background: var(--light-brown);
 }
 
+.toolbar__cancel__button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--white);
+  outline: none;
+}
+
 .toolbar__comment__button {
   cursor: pointer;
   padding: 0.5em;
@@ -60,22 +67,4 @@
 
 .comment_invalid {
   cursor: not-allowed;
-}
-
-.authentication__request {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid var(--brown);
-  border-radius: 3px;
-  padding: 0.8em 1em;
-}
-
-.authentication__text {
-  font-weight: 700;
-  margin-right: 2em;
-}
-
-.authentication__buttons > :not(:last-child) {
-  margin-right: 1em;
 }
