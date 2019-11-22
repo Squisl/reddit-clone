@@ -1,7 +1,7 @@
 .toolbar__button {
   display: flex;
   align-items: center;
-  background: var(--brown);
+  background: none;
   color: var(--white);
   cursor: pointer;
   border: none;

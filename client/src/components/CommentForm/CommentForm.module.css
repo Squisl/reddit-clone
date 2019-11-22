@@ -42,6 +42,10 @@
   margin-right: 0.3em;
 }
 
+.button_active {
+  background: var(--light-brown);
+}
+
 .toolbar__comment__button {
   cursor: pointer;
   padding: 0.5em;
