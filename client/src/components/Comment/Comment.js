@@ -9,12 +9,35 @@ import relativeTime from "../../utilities/relativeTime";
 import totalVotes from "../../utilities/totalVotes";
 import ReplyEditor from "../ReplyEditor";
 
-const Comment = ({id, post_id, user, text, time, votes, upvote, downvote, session}) => {
+const Comment = ({
+  id,
+  post_id,
+  user,
+  text,
+  time,
+  votes,
+  upvote,
+  downvote,
+  session,
+  replies,
+}) => {
   const [replyOpen, setReplyOpen] = useState(false);
 
   const toggleReply = () => setReplyOpen(!replyOpen);
 
   const sanitizer = dompurify.sanitize;
+
+  const nestedComments = (replies || []).map(comment => (
+    <Comment
+      key={comment._id}
+      id={comment._id}
+      post_id={comment.post.name}
+      user={comment.user.name}
+      text={comment.text}
+      time={comment.createdAt}
+      votes={comment.votes}
+    />
+  ));
   return (
     <div className={styles.comment}>
       <div className={styles.comment__sidebar}>
@@ -54,6 +77,7 @@ const Comment = ({id, post_id, user, text, time, votes, upvote, downvote, sessio
         {replyOpen && (
           <ReplyEditor comment_id={id} post_id={post_id} toggle={toggleReply} />
         )}
+        {nestedComments}
       </div>
     </div>
   );

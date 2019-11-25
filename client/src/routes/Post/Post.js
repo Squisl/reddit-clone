@@ -5,6 +5,7 @@ import PostContent from "../../components/PostContent";
 import Loading from "../../components/Loading";
 import Comment from "../../components/Comment";
 import CommentForm from "../../components/CommentForm";
+import nestComments from "../../utilities/nestComments";
 
 const Post = ({
   match,
@@ -55,7 +56,8 @@ const Post = ({
           <CommentForm post_id={post._id} />
         </div>
         <div className={styles.comments__container}>
-          {comments.map(comment => (
+          {console.log(nestComments(comments))}
+          {nestComments(comments).map(comment => (
             <Comment
               key={comment._id}
               id={comment._id}
@@ -64,6 +66,7 @@ const Post = ({
               text={comment.text}
               time={comment.createdAt}
               votes={comment.votes}
+              replies={comment.replies}
             />
           ))}
         </div>
