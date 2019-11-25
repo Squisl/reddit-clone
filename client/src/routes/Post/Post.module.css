@@ -5,6 +5,11 @@
   border-radius: 3px;
   overflow: hidden;
   background: var(--white);
+  padding: 1.5em;
+}
+
+.post__content > *:not(:last-child) {
+  margin-bottom: 3em;
 }
 
 .post__container {
@@ -26,4 +31,8 @@
 .comments__container {
   display: flex;
   flex-direction: column;
+}
+
+.comments__container > *:not(:last-child) {
+  margin-bottom: 2em;
 }
